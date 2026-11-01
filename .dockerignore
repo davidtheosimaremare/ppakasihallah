@@ -1,0 +1,11 @@
+.git
+.github
+.gitignore
+error_log
+*/error_log
+*/*/error_log
+.DS_Store
+*.tmp
+*.log
+docker-compose.yml
+.env

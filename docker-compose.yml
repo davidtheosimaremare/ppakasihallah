@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ppa-app:latest
+    container_name: ppa_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-tegartra_ppasihingbapa}
+      DB_PASSWORD: ${DB_PASSWORD:-sihingbapa123}
+      DB_NAME: ${DB_NAME:-tegartra_ppasihingbapa}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11.4
+    container_name: ppa_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword123}
+      MYSQL_DATABASE: ${DB_NAME:-tegartra_ppasihingbapa}
+      MYSQL_USER: ${DB_USER:-tegartra_ppasihingbapa}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-sihingbapa123}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./tegartra_ppasihingbapa.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

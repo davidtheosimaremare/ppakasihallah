@@ -1,0 +1,135 @@
+/*================================\
+| PHP_XLS                         |
+|                                 |
+| Version: 1.0                    |
+| Date:    2008-12-10             |
+| Author:  Cristian ILYES         |
+\================================*/
+
+This is the first draft of this documentation. There still are to do alot with this project, so help is welcomed.
+Many of the functions don't have checks for passed vars, so the calling script must pass correct args.
+There may be features to be added to this class. Sugestions can be posted on 
+
+Function list and some details:
+
+ - function SetAuthor($author)
+Set the author's name in document
+
+
+ - function SetCompany($company)
+Set the company name in document
+
+ - function Open()
+Begin document. Not really big deal, just set the status as open
+
+
+ - function NewStyle($name)
+Defines a new style if not existing and set it as the current one. If style exists, returns 0.
+
+
+ - function CopyStyle($source,$destination)
+If the source style exists, it is copied in the destination style and set as the current style.
+Otherwise return 0
+
+
+ - function SetActiveStyle($style)
+Sets as current style the style passed as agument. If the style doesn't exist, nothing is done and returns 0.
+
+
+ - function StyleSetBackground($color='#FFFFFF', $pattern='Solid')
+Set the background collor and fill style to the current style
+
+
+ - function StyleSetFont($fontname=0, $size=0, $color=0, $bold=0, $italic=0, $underline=0)
+Set the font parameters to the current style
+Note: - underline can be 0-no underline; 1-one underline; 2-double underlines
+      - bold, italic 0-unset; 1-set 
+
+
+ - function StyleSetAlignment($horizontal, $vertical=0)
+Set the alignment to the current style
+Note: - values can be -1 -left/top; 0 -center; 1-right/bottom; or names
+
+
+ - function StyleAddBorder($position, $color='#000000', $thick=1, $style='Continuous')
+Ads a border to the current style. Position can be one of "Bottom","Left",
+"Right","Top","DiagonalLeft","DiagonalRight" and the thicness less than 4
+
+
+ - function AddSheet($name='Sheet')
+Start a new Worksheet with the name provided
+
+
+ - function SetColWidth($col, $width)
+Set column Width in pixels
+
+
+ - function SetRowHeight($row, $height)
+Set column Height in pixels
+
+
+ - function Cell($row, $col, $data='', $type='String')
+Write data to the cell. row must be less than 65535 and col less than 255. 
+Type can be one of: String or Number
+
+
+ - function Text($row, $col, $txt)
+Alias to Cell with type set to String
+
+
+ - function Number($row, $col, $num)
+Alias to Cell with type set to Number
+
+
+ - function Close()
+Close document and generate internal buffer data to be exported
+
+
+ - function Output($name='')
+Output XLS from internal buffer to browser as download file with the name provided
+
+
+ - function Error($msg)
+Stops the execution of the script and dumps a message
+
+
+/*================================\
+|                                 |
+|       Protected methods         |
+|                                 |
+\================================*/
+
+
+ - function _beginsheet($name)
+Set internal vars with a new empty sheet
+
+
+ - function _endsheet()
+End editing of current sheet
+
+
+ - function _out($s)
+Append string to xls buffer
+
+
+ - function _putworkbook()
+The header of xls
+
+ - function _putdocprop()
+The xls properties
+
+
+ - function _putexcelworbook()
+The xls excellworkbook
+
+
+ - function _putstyles()
+Append xls styles
+
+
+ - function _putsheet($sheet_no)
+Append a sheet to internal buffer
+
+
+ - function _parsedoc()
+Combine all _put***** function to generate the xls into internal buffer
