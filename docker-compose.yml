@@ -6,8 +6,8 @@ services:
     image: ppa-app:latest
     container_name: ppa_app
     restart: unless-stopped
-    ports:
-      - "${APP_PORT:-8080}:80"
+    expose:
+      - "80"
     environment:
       DB_HOST: db
       DB_PORT: 3306
