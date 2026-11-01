@@ -1,0 +1,3 @@
+FROM mariadb:11.4
+
+COPY tegartra_ppasihingbapa.sql /docker-entrypoint-initdb.d/init.sql
